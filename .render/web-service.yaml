@@ -1,13 +1,17 @@
 services:
   - type: web
-    name: trading-dashboard
-    runtime: python
+    name: algo-trading-dashboard
+    env: python
+    plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: streamlit run app/main.py
+    startCommand: streamlit run app/main.py --server.port $PORT --server.address 0.0.0.0
     envVars:
       - key: AWS_KEY
-        sync: false
+        sync: false  # Set in Render dashboard
       - key: AWS_SECRET
-        sync: false
+        sync: false  # Set in Render dashboard
       - key: S3_BUCKET
-        value: your-s3-bucket-name
+        sync: false  # Set in Render dashboard
+      - key: AWS_REGION
+        value: us-west-2
+    autoDeploy: true

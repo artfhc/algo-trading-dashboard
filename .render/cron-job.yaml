@@ -1,14 +1,19 @@
 services:
   - type: cron
-    name: sync-trading-data
-    runtime: python
-    schedule: "0 * * * *"
+    name: composer-data-ingest
+    env: python
+    plan: free
     buildCommand: pip install -r requirements.txt
     startCommand: python jobs/composer_ingest.py
+    schedule: "0 */6 * * *"  # Run every 6 hours
     envVars:
       - key: AWS_KEY
-        sync: false
+        sync: false  # Set in Render dashboard
       - key: AWS_SECRET
-        sync: false
+        sync: false  # Set in Render dashboard
       - key: S3_BUCKET
-        value: your-s3-bucket-name
+        sync: false  # Set in Render dashboard
+      - key: AWS_REGION
+        value: us-west-2
+      - key: COMPOSER_API_KEY
+        sync: false  # Set in Render dashboard when implemented
